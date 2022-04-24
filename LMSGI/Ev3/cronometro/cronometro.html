@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronómetro - Marcos Alonso Reyero</title>
+</head>
+<style>
+    .centrado {
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+
+    main {
+        margin-top: 10%;
+    }
+
+    #crono {
+        display: flex;
+    }
+</style>
+<script>
+    var intervalo;
+
+    function adelante() {
+        detener();
+        intervalo = setInterval(() => {
+            document.getElementById("s").innerText++;
+            if (document.getElementById("s").innerText < 10) {
+                document.getElementById("s").innerText = "0" + document.getElementById("s").innerText++;
+            }
+            if (document.getElementById("s").innerText == 60) {
+                clearInterval(intervalo);
+                setCrono("01", "00");
+            }
+        }, 1000);
+    }
+
+    function atras() {
+        detener();
+        setCrono("01", "00");
+        intervalo = setInterval(() => {
+            if (document.getElementById("m").innerText == 1) {
+                setCrono("00", "60");
+            }
+            document.getElementById("s").innerText--;
+            if (document.getElementById("s").innerText < 10) {
+                document.getElementById("s").innerText = "0" + document.getElementById("s").innerText--;
+            }
+            if (document.getElementById("s").innerText == 0) {
+                clearInterval(intervalo);
+            }
+        }, 1000);
+    }
+
+    function setCrono(m, s) {
+        document.getElementById("m").innerText = m;
+        document.getElementById("s").innerText = s;
+    }
+
+    function detener() {
+        clearInterval(intervalo);
+        setCrono("00", "00");
+    }
+</script>
+
+<body>
+    <main class="centrado">
+        <h2>Hecho por Marcos Alonso Reyero</h2>
+        <div id="crono" class="centrado">
+            <h1 id="m">00</h1>
+            <h1>:</h1>
+            <h1 id="s">00</h1>
+        </div>
+        <button onclick="adelante()">Hacia adelante</button>
+        <button onclick="atras()">Hacia atras</button>
+        <button onclick="detener()">Parar</button>
+    </main>
+</body>
+
+</html>
